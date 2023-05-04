@@ -21,10 +21,25 @@ def isYaml(YAML):
         return False
     return True
 
-def wrtieToJSON(firstJSON,newFile ):
+def justCopy(firstFile,newFile ):
     file = open(newFile,'a')
-    file.write(firstJSON)
+    file.write(firstFile)
     file.close()
+
+def ymlToJSON(firstFile,secondFile):
+    with open(firstFile, 'r') as file:
+        yamlFile = yaml.safe_load(file)
+
+    with open(secondFile, 'w') as fileTwo:
+        json.dump(yamlFile,fileTwo)
+
+def JSONtoyml(firstFile,secondFile):
+    with open(firstFile, 'r') as file:
+        JSONFile = json.load(file)
+
+    with open(secondFile,'w') as file:
+        yaml.dump(JSONFile, file)
+
 
 
 firstArgument = input("Insert first file: ")
@@ -42,14 +57,19 @@ match firstArg.lower():
     case 'json':
         if isJson(readFile(firstArgument)):
             match secondArg.lower():
-                case 'json': wrtieToJSON(readFile(firstArgument),secondArgument)
-                case _: print("[Error 03] Wrong extension. Program accept only .json")
+                case 'json': justCopy(readFile(firstArgument),secondArgument)
+                case 'yaml' | 'yml' : JSONtoyml(firstArgument,secondArgument)
+                case _: print("[Error 03] Wrong extension. Program accept only .json, .yml")
         else:
             print("[Error 02] This file is not JSON file.")
     case 'yaml' | 'yml':
-        isYaml(readFile(firstArgument))
+        if isYaml(readFile(firstArgument)):
+            match secondArg.lower():
+                case 'json': ymlToJSON(firstArgument,secondArgument)
+                case 'yaml' | 'yml' : justCopy(readFile(firstArgument),secondArgument)
+                case _: print("[Error 03] Wrong extension. Program accept only .json, .yml")
 
     case _:
-        print("[Error 01] Wrong extension. Program accept only .json")
+        print("[Error 01] Wrong extension. Program accept only .json, .yml")
 
 input("PRESS [ENTER TO LEAVE]")
