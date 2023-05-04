@@ -1,4 +1,5 @@
 import json
+import yaml
 
 
 def readFile(file):
@@ -9,6 +10,13 @@ def readFile(file):
 def isJson(JSON):
     try:
         json.loads(JSON)
+    except ValueError as e:
+        return False
+    return True
+
+def isYaml(YAML):
+    try:
+        yaml.safe_load(YAML)
     except ValueError as e:
         return False
     return True
@@ -32,14 +40,14 @@ secondArg = secondArgument[dot + 1:]
 
 match firstArg.lower():
     case 'json':
-
         if isJson(readFile(firstArgument)):
             match secondArg.lower():
                 case 'json': wrtieToJSON(readFile(firstArgument),secondArgument)
                 case _: print("[Error 03] Wrong extension. Program accept only .json")
         else:
             print("[Error 02] This file is not JSON file.")
-
+    case 'yaml' | 'yml':
+        isYaml(readFile(firstArgument))
 
     case _:
         print("[Error 01] Wrong extension. Program accept only .json")
