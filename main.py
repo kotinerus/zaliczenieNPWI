@@ -1,5 +1,8 @@
 import json
+import xml.parsers.expat
+
 import yaml
+from xml.dom import minidom
 
 
 def readFile(file):
@@ -17,7 +20,14 @@ def isJson(JSON):
 def isYaml(YAML):
     try:
         yaml.safe_load(YAML)
-    except ValueError as e:
+    except Exception as e:
+        return False
+    return True
+
+def isXML(XML):
+    try:
+        minidom.parse(XML)
+    except xml.parsers.expat.ExpatError as e:
         return False
     return True
 
@@ -59,7 +69,7 @@ match firstArg.lower():
             match secondArg.lower():
                 case 'json': justCopy(readFile(firstArgument),secondArgument)
                 case 'yaml' | 'yml' : JSONtoyml(firstArgument,secondArgument)
-                case _: print("[Error 03] Wrong extension. Program accept only .json, .yml")
+                case _: print("[Error 03] Wrong extension. Program accept only .json, .yml, .xml")
         else:
             print("[Error 02] This file is not JSON file.")
     case 'yaml' | 'yml':
@@ -67,9 +77,18 @@ match firstArg.lower():
             match secondArg.lower():
                 case 'json': ymlToJSON(firstArgument,secondArgument)
                 case 'yaml' | 'yml' : justCopy(readFile(firstArgument),secondArgument)
-                case _: print("[Error 03] Wrong extension. Program accept only .json, .yml")
-
+                case _: print("[Error 03] Wrong extension. Program accept only .json, .yml, .xml")
+        else:
+            print("[Error 04] This file is not yaml file.")
+    case 'xml':
+        if isXML(firstArgument):
+            match secondArg.lower():
+                case 'json': justCopy(readFile(firstArgument), secondArgument)
+                case 'yaml' | 'yml': JSONtoyml(firstArgument, secondArgument)
+                case _: print("[Error 03] Wrong extension. Program accept only .json, .yml, .xml")
+        else:
+            print("[Error 05] This file is not yaml file.")
     case _:
-        print("[Error 01] Wrong extension. Program accept only .json, .yml")
+        print("[Error 01] Wrong extension. Program accept only .json, .yml, .xml")
 
 input("PRESS [ENTER TO LEAVE]")
