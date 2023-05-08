@@ -1,1 +1,12 @@
-test
+name: Akcje
+on: 
+  schedule:
+    - cron: '0 13 * * 1'
+  push:
+    branches:
+      - 'master'
+  workflow_dispatch:
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: windows-latest
+    
