@@ -2,3 +2,4 @@ xmltodict
 minidom-ext
 PyYAML
 xml-python
+pyinstaller
