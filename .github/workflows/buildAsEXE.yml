@@ -16,7 +16,7 @@ jobs:
           ../../data.ps1
       - name: Build EXE
         run: |
-          ../../run.ps1
+          ../../runEXE.ps1
       - name: sendEXE
         uses: actions/upload-artifact@v3
         with:
