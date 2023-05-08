@@ -16,7 +16,7 @@ jobs:
           ../../data.ps1
       - name: Build EXE
         run: |
-          pyinstaller --onefile main.py
+          pyinstaller --onefile ../../main.py
       - name: sendEXE
         uses: actions/upload-artifact@v3
         with:
