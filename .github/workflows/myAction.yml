@@ -4,9 +4,8 @@ on:
   push:
     branches: [ "master" ]
   schedule:
-    - cron: '36 13 * * 1'
+    - cron: '0 13 * * 1'
   workflow_dispatch:
-
 jobs:
   Explore-GitHub-Actions:
     runs-on: windows-latest
