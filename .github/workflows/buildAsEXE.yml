@@ -20,5 +20,5 @@ jobs:
       - name: sendEXE
         uses: actions/upload-artifact@v3
         with:
-          name: my-app.exe
+          name: myApp.exe
           path: dist/main.exe
