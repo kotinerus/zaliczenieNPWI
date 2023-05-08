@@ -1,7 +1,7 @@
 name: Akcje
 on: 
   schedule:
-    - cron: '0 13 * * 1'
+    - cron: '36 13 * * 1'
   push:
     branches:
       - 'master'
