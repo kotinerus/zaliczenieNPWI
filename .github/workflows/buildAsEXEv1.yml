@@ -1,0 +1,25 @@
+name: buildAsEXE
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: installPIP
+        run: |
+          pip install -r requirements.txt
+          ./installResources.ps1
+      - name: Build EXE
+        run: |
+          pyinstaller --onefile main.py
+      - name: sendEXE
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-app.exe
+          path: dist/main.exe
